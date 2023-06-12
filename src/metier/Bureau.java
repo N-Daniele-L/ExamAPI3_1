@@ -184,8 +184,8 @@ public class Bureau {
             return this;
         }
         public Bureau build() throws Exception{
-            /*if(sigle==null || tel==null) throw new
-                    Exception("informations de construction incomplètes");*/
+            if(!sigle.matches("[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{3,6}")|| !tel.matches("0{1}[0-9]{2}[/][0-9]{2}[.][0-9]{2}[.][0-9]{2}")) throw new
+                    Exception("informations de construction incomplètes");
             return new Bureau(this);
         }
 
