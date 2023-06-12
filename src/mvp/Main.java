@@ -1,6 +1,8 @@
-import model.*;
-import presenter.*;
-import view.*;
+package mvp;
+
+import mvp.model.*;
+import mvp.presenter.*;
+import mvp.view.*;
 import utilitaires.Utilitaire;
 
 import java.util.Arrays;
@@ -8,61 +10,61 @@ import java.util.InputMismatchException;
 import java.util.List;
 
 public class Main {
-    private DAOEmploye cm;
-    private EmployePresenter cp;
-    private EmployeViewInterface cv;
     private DAOBureau bm;
     private BureauPresenter bp;
     private BureauViewInterface bv;
+    /*private DAOEmploye cm;
+    private EmployePresenter cp;
+    private EmployeViewInterface cv;
     private DAOMessage mm;
     private MessagePresenter mp;
     private MessageViewInterface mv;
     private DAOInfos im;
     private InfosPresenter ip;
-    private InfosViewInterface iv;
+    private InfosViewInterface iv;*/
 
 
 
     public void gestion() throws Exception {
-        bm = new BureauModelDB();
+        bm = new ModelDBBureau();
         bv = new BureauViewConsole();
         bp = new BureauPresenter(bm,bv);
 
-        cm = new EmployeModelDB();
+        /*cm = new ModelDBEmploye();
         cv = new EmployeViewConsole();
         cp = new EmployePresenter(cm,cv);
         cp.setBureauPresenter(bp);
 
-        mm = new MessageModelDB();
+        mm = new ModelDBMessage();
         mv = new MessageViewConsole();
         mp = new MessagePresenter(mm,mv);
         mp.setEmployepresenter(cp);
 
-        im = new InfosModelDB();
+        im = new ModelDBInfos();
         iv = new InfosViewConsole();
         ip = new InfosPresenter(im,iv);
         ip.setEmployepresenter(cp);
-        ip.setMessagePresenter(mp);
+        ip.setMessagePresenter(mp);*/
 
 
 
 
-        List<String> loptions = Arrays.asList("Employe","Bureau","Messages","Infos","Fin");
+        List<String> loptions = Arrays.asList("Bureau","Employe","Messages","Infos","Fin");
         try{
             do {
                 int ch = Utilitaire.choixListe(loptions);
                 switch (ch) {
                     case 1:
-                        cp.start();
-                        break;
-                    case 2:
                         bp.start();
                         break;
+                    case 2:
+                        //cp.start();
+                        break;
                     case 3:
-                        mp.start();
+                        //mp.start();
                         break;
                     case 4:
-                        ip.start();
+                        //ip.start();
                         break;
                     case 5:
                         System.exit(0);

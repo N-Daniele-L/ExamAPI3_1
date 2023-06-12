@@ -1,4 +1,4 @@
-package model;
+package mvp.model;
 
 public class ModelDBMessage {
 }
