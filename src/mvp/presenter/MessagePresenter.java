@@ -35,21 +35,20 @@ public class MessagePresenter {
     }
 
     public void addMessage(Message message) throws Exception {
-        Message me = null;
+        Message me;
         Employe employe = employePresenter.selectionner();
         if(employe == null){
             view.affMsg("Erreur employe null");
             return;
         }
         /*me = new Message.MessageBuilder()
-                .setId(message.getId())
+                .setId(0)
                 .setObjet(message.getObjet())
                 .setContenu(message.getContenu())
                 .setDateEnvoi(message.getDateEnvoi())
-                .setId_emp(employe.getId_emp())
                 .setEmetteur(employe)
                 .build();*/
-        me = new Message(0, me.getObjet(), message.getContenu(), message.getDateEnvoi(), null);
+        me = new Message(0, message.getObjet(), message.getContenu(), message.getDateEnvoi(),0);
         me.setEmetteur(employe);
         Message m = model.addMessage(me);
         if(m==null) view.affMsg("erreur de creation");

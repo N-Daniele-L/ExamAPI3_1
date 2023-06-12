@@ -108,4 +108,7 @@ public class Message {
                 ", id emetteur=" + id_emp +
                 '}';
     }
+
+    /*public static class MessageBuilder {
+    }*/
 }
