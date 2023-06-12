@@ -36,6 +36,7 @@ public class Message {
         this.emetteur = mb.emetteur;
         this.dateEnvoi = mb.dateEnvoi;
         this.id_emp = mb.id_emp;
+        this.l_infos = mb.l_infos;
     }
 
     public int getId_mess() {
@@ -163,7 +164,7 @@ public class Message {
         }
 
         public Message build() throws Exception{
-            /*if(contenu==null) throw new
+            /*if(l_infos==null) throw new
                     Exception("informations de construction incomplètes");*/
             return new Message(this);
         }

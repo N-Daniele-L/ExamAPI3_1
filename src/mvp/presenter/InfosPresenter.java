@@ -48,9 +48,14 @@ public class InfosPresenter {
         }
         infos.setRecepteur(employe);
         infos.setMess(message);
-        Infos i = model.addInfos(infos);
-        if(i!=null) view.affMsg("création de : "+ i);
-        else view.affMsg("erreur de création");
+        if(infos.getRecepteur().getId_emp() == message.getId_emp()){
+            view.affMsg(" erreur un message ne peut pas être envoyé a soi même");
+        }
+        else {
+            Infos i = model.addInfos(infos);
+            if (i != null) view.affMsg("création de : " + i);
+            else view.affMsg("erreur de création");
+        }
     }
 
     public void removeInfos(Infos infos) {

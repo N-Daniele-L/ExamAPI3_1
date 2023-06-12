@@ -32,7 +32,7 @@ public class ModelDBInfos implements DAOInfos{
             pstm1.setInt(1, inf.getRecepteur().getId());
             pstm1.setInt(2, inf.getMess().getId_mess());
             int n = pstm1.executeUpdate();
-            return inf;
+            return new Infos((inf.getRecepteur().getId()),inf.getMess().getId_mess(),null);
         } catch (SQLException e) {
             //System.err.println("erreur sql :"+e);
             logger.error("erreur sql :" + e);
@@ -86,7 +86,7 @@ public class ModelDBInfos implements DAOInfos{
                 Date date = rs.getDate(3);
                 if(date != null) {
                     LocalDate localdate = date.toLocalDate();
-                    return new Infos(id_emp, id_mess, localdate);
+                    return new Infos(id_emp,id_mess,localdate);
                 }else {
                     return new Infos(id_emp, id_mess, null);
                 }
