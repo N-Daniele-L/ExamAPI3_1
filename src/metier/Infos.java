@@ -19,6 +19,12 @@ public class Infos {
         this.id_mess = id_mess;
     }
 
+    public Infos(int id_emp, int id_mess, LocalDate localdate) {
+        this.id_emp = id_emp;
+        this.id_mess = id_mess;
+        dateLecture = localdate;
+    }
+
     public Employe getRecepteur() {
         return recepteur;
     }

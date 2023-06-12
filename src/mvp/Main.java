@@ -19,9 +19,9 @@ public class Main {
     private DAOMessage mm;
     private MessagePresenter mp;
     private MessageViewInterface mv;
-    /*private DAOInfos im;
+    private DAOInfos im;
     private InfosPresenter ip;
-    private InfosViewInterface iv;*/
+    private InfosViewInterface iv;
 
 
 
@@ -40,11 +40,11 @@ public class Main {
         mp = new MessagePresenter(mm,mv);
         mp.setEmployepresenter(cp);
 
-        /*im = new ModelDBInfos();
+        im = new ModelDBInfos();
         iv = new InfosViewConsole();
         ip = new InfosPresenter(im,iv);
         ip.setEmployepresenter(cp);
-        ip.setMessagePresenter(mp);*/
+        ip.setMessagePresenter(mp);
 
 
 
@@ -64,7 +64,7 @@ public class Main {
                         mp.start();
                         break;
                     case 4:
-                        //ip.start();
+                        ip.start();
                         break;
                     case 5:
                         System.exit(0);
