@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class Message {
-    private int id_mess;
-    private String objet;
-    private String contenu;
-    private LocalDate dateEnvoi;
-    private Employe emetteur;
-    private int id_emp;
-    private List<Infos> l_infos = new ArrayList<>();
+    protected int id_mess;
+    protected String objet;
+    protected String contenu;
+    protected LocalDate dateEnvoi;
+    protected Employe emetteur;
+    protected int id_emp;
+    protected List<Infos> l_infos = new ArrayList<>();
 
-    public Message(int id_mess, String objet, String contenu, LocalDate dateEnvoi, Employe emetteur){
+    /*public Message(int id_mess, String objet, String contenu, LocalDate dateEnvoi, Employe emetteur){
         this.id_mess = id_mess;
         this.objet = objet;
         this.contenu = contenu;
@@ -27,6 +27,15 @@ public class Message {
         this.contenu = contenu;
         this.dateEnvoi = dateEnvoi;
         id_emp = emetteur;
+    }*/
+
+    public Message(MessageBuilder mb){
+        this.id_mess = mb.id_mess;
+        this.objet = mb.objet;
+        this.contenu = mb.contenu;
+        this.emetteur = mb.emetteur;
+        this.dateEnvoi = mb.dateEnvoi;
+        this.id_emp = mb.id_emp;
     }
 
     public int getId_mess() {
@@ -109,6 +118,54 @@ public class Message {
                 '}';
     }
 
-    /*public static class MessageBuilder {
-    }*/
+    public static class MessageBuilder {
+        protected int id_mess;
+        protected String objet;
+        protected String contenu;
+        protected LocalDate dateEnvoi;
+        protected Employe emetteur;
+        protected int id_emp;
+        protected List<Infos> l_infos = new ArrayList<>();
+
+        public MessageBuilder setId_mess(int id_mess) {
+            this.id_mess = id_mess;
+            return this;
+        }
+
+        public MessageBuilder setObjet(String objet) {
+            this.objet = objet;
+            return this;
+        }
+
+        public MessageBuilder setContenu(String contenu) {
+            this.contenu = contenu;
+            return this;
+        }
+
+        public MessageBuilder setDateEnvoi(LocalDate dateEnvoi) {
+            this.dateEnvoi = dateEnvoi;
+            return this;
+        }
+
+        public MessageBuilder setEmetteur(Employe emetteur) {
+            this.emetteur = emetteur;
+            return this;
+        }
+
+        public MessageBuilder setId_emp(int id_emp) {
+            this.id_emp = id_emp;
+            return this;
+        }
+
+        public MessageBuilder setL_infos(List<Infos> l_infos) {
+            this.l_infos = l_infos;
+            return this;
+        }
+
+        public Message build() throws Exception{
+            /*if(contenu==null) throw new
+                    Exception("informations de construction incomplètes");*/
+            return new Message(this);
+        }
+    }
 }

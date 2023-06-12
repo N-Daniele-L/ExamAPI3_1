@@ -42,13 +42,14 @@ public class ModelDBMessage implements DAOMessage {
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
                     int id_mes = rs.getInt(1);
-                    /*m = new Message.MessageBuilder()
-                            .setId(id_mes)
+                    m = new Message.MessageBuilder()
+                            .setId_mess(id_mes)
                             .setObjet(mes.getObjet())
                             .setContenu(mes.getContenu())
-                            .setId_emp(mes.getId_emp())
-                            .build();*/
-                    m = new Message(id_mes, mes.getObjet(), mes.getContenu(), LocalDate.now(), mes.getEmetteur().getId());
+                            .setDateEnvoi(mes.getDateEnvoi())
+                            .setId_emp(mes.getEmetteur().getId())
+                            .build();
+                    //m = new Message(id_mes, mes.getObjet(), mes.getContenu(), LocalDate.now(), mes.getEmetteur().getId());
                     return m;
                 } else {
                     logger.error("record introuvable");
@@ -111,15 +112,14 @@ public class ModelDBMessage implements DAOMessage {
                 String cont = rs.getString(3);
                 LocalDate date = rs.getDate(4).toLocalDate();
                 int id_emp = rs.getInt(5);
-                /*return new Message.MessageBuilder()
-                        .setId_emp(id_mess)
+                return new Message.MessageBuilder()
+                        .setId_mess(id_mess)
                         .setObjet(objet)
                         .setContenu(cont)
                         .setDateEnvoi(date)
                         .setId_emp(id_emp)
                         .build();
-                */
-                return new Message(id_mess, objet, cont, date, id_emp);
+                //return new Message(id_mess, objet, cont, date, id_emp);
             } else {
                 return null;
             }
@@ -145,14 +145,14 @@ public class ModelDBMessage implements DAOMessage {
                 LocalDate date = rs.getDate(4).toLocalDate();
                 int id_emp = rs.getInt(5);
 
-                /*Message mes = new Message.MessageBuilder()
-                        .setId(id_mess)
+                Message mes = new Message.MessageBuilder()
+                        .setId_mess(id_mess)
                         .setObjet(objet)
                         .setContenu(cont)
                         .setDateEnvoi(date)
                         .setId_emp(id_emp)
-                        .build();*/
-                Message mes = new Message(id_mess, objet, cont, date, id_emp);
+                        .build();
+                //Message mes = new Message(id_mess, objet, cont, date, id_emp);
                 lm.add(mes);
             }
             return lm;

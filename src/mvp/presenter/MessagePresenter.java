@@ -7,6 +7,7 @@ import mvp.view.MessageViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MessagePresenter {
@@ -41,15 +42,15 @@ public class MessagePresenter {
             view.affMsg("Erreur employe null");
             return;
         }
-        /*me = new Message.MessageBuilder()
-                .setId(0)
+        me = new Message.MessageBuilder()
+                .setId_mess(0)
                 .setObjet(message.getObjet())
                 .setContenu(message.getContenu())
                 .setDateEnvoi(message.getDateEnvoi())
                 .setEmetteur(employe)
-                .build();*/
-        me = new Message(0, message.getObjet(), message.getContenu(), message.getDateEnvoi(),0);
-        me.setEmetteur(employe);
+                .build();
+        //me = new Message(0, message.getObjet(), message.getContenu(), message.getDateEnvoi(),0);
+        //me.setEmetteur(employe);
         Message m = model.addMessage(me);
         if(m==null) view.affMsg("erreur de creation");
         else view.affMsg("création de : " + m);

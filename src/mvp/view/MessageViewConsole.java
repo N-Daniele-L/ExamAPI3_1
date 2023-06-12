@@ -79,14 +79,14 @@ public class MessageViewConsole implements MessageViewInterface{
             System.out.println("Entrez le contenu du message");
             String cont = sc.nextLine();
 
-            /*presenter.addMessage(new Message.MessageBuilder()
-                    .setId(0)
+            presenter.addMessage(new Message.MessageBuilder()
+                    .setId_mess(0)
                     .setObjet(obj)
                     .setContenu(cont)
                     .setDateEnvoi(now)
                     .setId_emp(0)
-                    .build());*/
-            presenter.addMessage(new Message(0,obj,cont,now,null));
+                    .build());
+            //presenter.addMessage(new Message(0,obj,cont,now,null));
             lm = presenter.getAll();
             affListe(lm);
         }catch (InputMismatchException e){
@@ -123,14 +123,14 @@ public class MessageViewConsole implements MessageViewInterface{
             LocalDate now = LocalDate.now();
             String obj = modifyIfNotBlank("objet" , message.getObjet());
             String cont = modifyIfNotBlank("contenu", message.getContenu());
-            /*presenter.update(new Message.MessageBuilder()
-                    .setId(message.getId())
+            presenter.update(new Message.MessageBuilder()
+                    .setId_mess(message.getId_mess())
                     .setObjet(obj)
                     .setContenu(cont)
                     .setDateEnvoi(now)
                     .setId_emp(0)
-                    .build());*/
-            presenter.addMessage(new Message(0,obj,cont,now,null));
+                    .build());
+            //presenter.addMessage(new Message(0,obj,cont,now,null));
             lm = presenter.getAll();//rafraichissement
             affListe(lm);
         }catch (InputMismatchException e){
