@@ -13,13 +13,13 @@ public class Main {
     private DAOBureau bm;
     private BureauPresenter bp;
     private BureauViewInterface bv;
-    /*private DAOEmploye cm;
+    private DAOEmploye cm;
     private EmployePresenter cp;
     private EmployeViewInterface cv;
     private DAOMessage mm;
     private MessagePresenter mp;
     private MessageViewInterface mv;
-    private DAOInfos im;
+    /*private DAOInfos im;
     private InfosPresenter ip;
     private InfosViewInterface iv;*/
 
@@ -30,7 +30,7 @@ public class Main {
         bv = new BureauViewConsole();
         bp = new BureauPresenter(bm,bv);
 
-        /*cm = new ModelDBEmploye();
+        cm = new ModelDBEmploye();
         cv = new EmployeViewConsole();
         cp = new EmployePresenter(cm,cv);
         cp.setBureauPresenter(bp);
@@ -40,7 +40,7 @@ public class Main {
         mp = new MessagePresenter(mm,mv);
         mp.setEmployepresenter(cp);
 
-        im = new ModelDBInfos();
+        /*im = new ModelDBInfos();
         iv = new InfosViewConsole();
         ip = new InfosPresenter(im,iv);
         ip.setEmployepresenter(cp);
@@ -58,10 +58,10 @@ public class Main {
                         bp.start();
                         break;
                     case 2:
-                        //cp.start();
+                        cp.start();
                         break;
                     case 3:
-                        //mp.start();
+                        mp.start();
                         break;
                     case 4:
                         //ip.start();
