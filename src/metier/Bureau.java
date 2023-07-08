@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Bureau {
 
+    private int nbr;
     /**
      * id unique du bureau
      */
@@ -40,6 +41,7 @@ public class Bureau {
         this.id_bur = bb.id_bur;
         this.sigle = bb.sigle;
         this.tel = bb.tel;
+        this.nbr = bb.nbr;
     }
 
     /**
@@ -124,7 +126,17 @@ public class Bureau {
                 '}';
     }
 
+    public String MyToString(){
+        return "Bureau{" +
+                "id=" + id_bur +
+                ", sigle='" + sigle + '\'' +
+                //", tel='" + tel + '\'' +
+                ", nombre d'employé='" + nbr + '\'' +
+                '}';
+    }
+
     public static class BureauBuilder{
+        public int nbr;
         /**
          * id unique du bureau
          */
@@ -183,11 +195,14 @@ public class Bureau {
             this.employe = employe;
             return this;
         }
+        public BureauBuilder setNbr(int nbr) {
+            this.nbr = nbr;
+            return this;
+        }
         public Bureau build() throws Exception{
             if(!sigle.matches("[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{3,6}")|| !tel.matches("0{1}[0-9]{2}[/][0-9]{2}[.][0-9]{2}[.][0-9]{2}")) throw new
                     Exception("informations de construction incomplètes");
             return new Bureau(this);
         }
-
     }
 }

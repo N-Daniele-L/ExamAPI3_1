@@ -42,6 +42,10 @@ public class InfosPresenter {
     public void addInfos(Infos infos) {
         Employe employe = employePresenter.selectionner();
         Message message = messagePresenter.selectionner();
+        System.out.println("\tRecepteur");
+        employePresenter.search(employe.getId_emp());
+        System.out.println("\tEmetteur");
+        employePresenter.search(message.getId_emp());
         if(employe == null){
             view.affMsg("Erreur employe null");
             return;

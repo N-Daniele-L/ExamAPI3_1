@@ -50,7 +50,7 @@ public class BureauViewConsole implements BureauViewInterface{
     private void menu() throws Exception {
         try{
             do {
-                int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","fin"));
+                int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","special","fin"));
                 switch (ch) {
                     case 1:
                         ajouter();
@@ -65,6 +65,9 @@ public class BureauViewConsole implements BureauViewInterface{
                         modifier();
                         break;
                     case 5:
+                        special();
+                        break;
+                    case 6:
                         return;
                 }
             } while (true);
@@ -130,5 +133,11 @@ public class BureauViewConsole implements BureauViewInterface{
     }
 
     private void special() {
+        lb = presenter.count();
+        int i =0;
+        for(Object o :lb) {
+            System.out.println((i+1)+"."+lb.get(i).MyToString());
+            i++;
+        }
     }
 }

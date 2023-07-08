@@ -9,9 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelDBBureau implements DAOBureau{
+public class ModelDBBureau implements DAOBureau, SpecialBureau {
     private static final Logger logger = LogManager.getLogger(ModelDBBureau.class);
     private Connection dbConnect;
+
     public ModelDBBureau() {
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
@@ -21,6 +22,7 @@ public class ModelDBBureau implements DAOBureau{
         }
         logger.info("connexion établie");
     }
+
     @Override
     public Bureau addBureau(Bureau bureau) {
         Bureau buro;
@@ -80,17 +82,17 @@ public class ModelDBBureau implements DAOBureau{
     @Override
     public Bureau updateBureau(Bureau bureau) {
         String query = "update EXAMBUREAU set sigle = ?, tel = ? WHERE id_bureau = ?";
-        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1,bureau.getSigle());
-            pstm.setString(2,bureau.getTel());
-            pstm.setInt(3,bureau.getId());
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1, bureau.getSigle());
+            pstm.setString(2, bureau.getTel());
+            pstm.setInt(3, bureau.getId());
             int n = pstm.executeUpdate();
-            if(n!=0) return readBureau(bureau.getId());
+            if (n != 0) return readBureau(bureau.getId());
             else return null;
 
         } catch (SQLException e) {
             // System.err.println("erreur sql :" + e);
-            logger.error("erreur d'update : "+e);
+            logger.error("erreur d'update : " + e);
             return null;
         }
     }
@@ -98,10 +100,10 @@ public class ModelDBBureau implements DAOBureau{
     @Override
     public Bureau readBureau(int idBur) {
         String query = "select * from EXAMBUREAU where id_bureau = ?";
-        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1,idBur);
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, idBur);
             ResultSet rs = pstm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String sigle = rs.getString(2);
                 String tel = rs.getString(3);
                 return new Bureau.BureauBuilder()
@@ -109,13 +111,12 @@ public class ModelDBBureau implements DAOBureau{
                         .setSigle(sigle)
                         .setTel(tel)
                         .build();
-            }
-            else {
+            } else {
                 return null;
             }
         } catch (SQLException e) {
             // System.err.println("erreur sql :"+e);
-            logger.error("erreur SQL : "+e);
+            logger.error("erreur SQL : " + e);
             return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -125,10 +126,10 @@ public class ModelDBBureau implements DAOBureau{
     @Override
     public List<Bureau> getBureau() {
         List<Bureau> lb = new ArrayList<>();
-        String query="select * from EXAMBUREAU  ORDER BY id_bureau";
-        try(Statement stm = dbConnect.createStatement()) {
+        String query = "select * from EXAMBUREAU  ORDER BY id_bureau";
+        try (Statement stm = dbConnect.createStatement()) {
             ResultSet rs = stm.executeQuery(query);
-            while(rs.next()){
+            while (rs.next()) {
                 int id_bur = rs.getInt(1);
                 String sigle = rs.getString(2);
                 String tel = rs.getString(3);
@@ -142,8 +143,34 @@ public class ModelDBBureau implements DAOBureau{
             return lb;
         } catch (SQLException e) {
             //System.err.println("erreur sql :"+e);
-            logger.error("erreur SQL : "+e);
+            logger.error("erreur SQL : " + e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Bureau> NbrEmployeInDep() {
+        int i = 0;
+        List<Bureau> lb = new ArrayList<>();
+        String query = "select * from EXAMVIEW_TOTEMPINBUR ORDER BY id_bureau";
+        try (Statement stm = dbConnect.createStatement()) {
+            ResultSet rs = stm.executeQuery(query);
+            while (rs.next()) {
+                int nbr = rs.getInt(1);
+                int id = rs.getInt(2);
+                String sigle = rs.getString(3);
+                Bureau bur = new Bureau.BureauBuilder()
+                        .setId(id)
+                        .setSigle(sigle)
+                        .setTel(getBureau().get(i).getTel())
+                        .setNbr(nbr)
+                        .build();
+                lb.add(bur);
+                i++;
+            }
+            return lb;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

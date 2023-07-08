@@ -2,6 +2,8 @@ package mvp.presenter;
 
 import metier.Bureau;
 import mvp.model.DAOBureau;
+import mvp.model.ModelDBBureau;
+import mvp.model.SpecialBureau;
 import mvp.view.BureauViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,5 +64,9 @@ public class BureauPresenter {
         if(bur==null) view.affMsg("recherche infructueuse");
         else view.affMsg(bur.toString());
         return bur;
+    }
+
+    public List<Bureau> count(){
+        return ((SpecialBureau)model).NbrEmployeInDep();
     }
 }
