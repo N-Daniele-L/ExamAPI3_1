@@ -4,6 +4,8 @@ import metier.Bureau;
 import metier.Employe;
 import mvp.model.DAOBureau;
 import mvp.model.DAOEmploye;
+import mvp.model.SpecialBureau;
+import mvp.model.SpecialEmploye;
 import mvp.view.EmployeViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -85,6 +87,13 @@ public class EmployePresenter {
 
     public Employe search(int idEmp) {
         Employe em = model.readEmploye(idEmp);
+        if(em==null) view.affMsg("recherche infructueuse");
+        else view.affMsg(em.toString());
+        return em;
+    }
+
+    public Employe searchAdresse(String adresse){
+        Employe em = ((SpecialEmploye)model).readAdresseEmploye(adresse);
         if(em==null) view.affMsg("recherche infructueuse");
         else view.affMsg(em.toString());
         return em;

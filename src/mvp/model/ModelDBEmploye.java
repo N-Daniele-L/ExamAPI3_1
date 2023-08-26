@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelDBEmploye implements DAOEmploye{
+public class ModelDBEmploye implements DAOEmploye, SpecialEmploye{
     private static final Logger logger = LogManager.getLogger(ModelDBEmploye.class);
     private Connection dbConnect;
 
@@ -159,6 +159,38 @@ public class ModelDBEmploye implements DAOEmploye{
             return lc;
         } catch (SQLException e) {
             //System.err.println("erreur sql :"+e);
+            logger.error("erreur SQL : "+e);
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Employe readAdresseEmploye(String adresse) {
+        String query = "select * from EXAMEMPLOYE where mail_emp = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1,adresse);
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next()){
+                int idEmp = rs.getInt(1);
+                String nom = rs.getString(3);
+                String prenom = rs.getString(4);
+                int id_bur = rs.getInt(5);
+                return new Employe.EmployeBuilder()
+                        .setId(idEmp)
+                        .setMail(adresse)
+                        .setNom(nom)
+                        .setPrenom(prenom)
+                        .setId_bur(id_bur)
+                        .build();
+
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
         } catch (Exception e) {

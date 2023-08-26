@@ -1,5 +1,6 @@
 package mvp.view;
 
+import metier.Infos;
 import metier.Message;
 import mvp.presenter.MessagePresenter;
 import utilitaires.Utilitaire;
@@ -51,7 +52,7 @@ public class MessageViewConsole implements MessageViewInterface{
     private void menu() throws Exception {
         do {
 
-            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","fin"));
+            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","special","fin"));
             switch (ch) {
                 case 1:
                     ajouter();
@@ -66,6 +67,8 @@ public class MessageViewConsole implements MessageViewInterface{
                     modifier();
                     break;
                 case 5:
+                    special();
+                case 6:
                     return;
             }
         } while (true);
@@ -138,6 +141,30 @@ public class MessageViewConsole implements MessageViewInterface{
         }
     }
 
-    private void special() {
+    private void special() throws Exception {
+        try {
+            LocalDate now = LocalDate.now();
+            System.out.println("Entrez votre adresse mail");
+            String emetteur = sc.nextLine();
+            System.out.println("Entrez l'adresse mail du recepteur");
+            String recepteur = sc.nextLine();
+            System.out.println("Entrez l'objet du message': ");
+            String obj = sc.nextLine();
+            System.out.println("Entrez le contenu du message");
+            String cont = sc.nextLine();
+            Message me = new Message.MessageBuilder()
+                    .setId_mess(0)
+                    .setObjet(obj)
+                    .setContenu(cont)
+                    .setDateEnvoi(now)
+                    .setId_emp(0)
+                    .build();
+            Infos in = new Infos(null,null);
+            presenter.envoyerMessage(emetteur,recepteur,me,in);
+            lm = presenter.getAll();
+            affListe(lm);
+        } catch (InputMismatchException e) {
+            System.out.println("erreur " + e);
+        }
     }
 }

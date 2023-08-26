@@ -35,14 +35,18 @@ public class Main {
         cp = new EmployePresenter(cm,cv);
         cp.setBureauPresenter(bp);
 
-        mm = new ModelDBMessage();
-        mv = new MessageViewConsole();
-        mp = new MessagePresenter(mm,mv);
-        mp.setEmployepresenter(cp);
-
         im = new ModelDBInfos();
         iv = new InfosViewConsole();
         ip = new InfosPresenter(im,iv);
+
+        mm = new ModelDBMessage();
+        mv = new MessageViewConsole();
+        mp = new MessagePresenter(mm,mv);
+
+        mp.setEmployepresenter(cp);
+        mp.InfosPresenter(im,ip);
+
+
         ip.setEmployepresenter(cp);
         ip.setMessagePresenter(mp);
 

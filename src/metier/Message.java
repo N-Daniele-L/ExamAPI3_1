@@ -119,6 +119,7 @@ public class Message {
                 '}';
     }
 
+
     public static class MessageBuilder {
         protected int id_mess;
         protected String objet;

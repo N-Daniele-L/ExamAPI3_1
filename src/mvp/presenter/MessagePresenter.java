@@ -1,8 +1,12 @@
 package mvp.presenter;
 
 import metier.Employe;
+import metier.Infos;
 import metier.Message;
+import mvp.model.DAOEmploye;
+import mvp.model.DAOInfos;
 import mvp.model.DAOMessage;
+import mvp.model.SpecialEmploye;
 import mvp.view.MessageViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,16 +16,20 @@ import java.util.List;
 
 public class MessagePresenter {
     private static DAOMessage model;
+    private static DAOInfos modelinf;
     private MessageViewInterface view;
     private EmployePresenter employePresenter;
-
+    private InfosPresenter infosPresenter;
 
     private static final Logger logger = LogManager.getLogger(MessagePresenter.class);
 
-    public void setEmployepresenter(EmployePresenter employePresenterp) {
-        this.employePresenter = employePresenterp;
+    public void setEmployepresenter(EmployePresenter employePresenter) {
+        this.employePresenter = employePresenter;
     }
-
+    public void InfosPresenter(DAOInfos model,InfosPresenter infosPresenter){
+        modelinf = model;
+        this.infosPresenter = infosPresenter;
+    }
     public MessagePresenter(DAOMessage model,MessageViewInterface view){
         this.model = model;
         this.view = view;
@@ -79,5 +87,39 @@ public class MessagePresenter {
         if(me==null) view.affMsg("recherche infructueuse");
         else view.affMsg(me.toString());
         return me;
+    }
+
+    public void envoyerMessage(String adresse_emet, String adresse_recept, Message message, Infos infos) throws Exception {
+        Employe emetteur = employePresenter.searchAdresse(adresse_emet);
+        Employe recepteur = employePresenter.searchAdresse(adresse_recept);
+        //Employe emetteur = ((SpecialEmploye)modelemp).readAdresseEmploye(adresse_emet);
+        //Employe recepteur = ((SpecialEmploye)modelemp).readAdresseEmploye(adresse_recept);
+
+        Message me;
+
+        me = new Message.MessageBuilder()
+                .setId_mess(0)
+                .setObjet(message.getObjet())
+                .setContenu(message.getContenu())
+                .setDateEnvoi(message.getDateEnvoi())
+                .setEmetteur(emetteur)
+                .build();
+
+        Message m = model.addMessage(me);
+        if(m==null) view.affMsg("erreur de creation");
+        else view.affMsg("création de : " + m);
+
+
+
+        infos.setRecepteur(recepteur);
+        infos.setMess(m);
+        if(infos.getRecepteur().getId_emp() == message.getId_emp()){
+            view.affMsg(" erreur un message ne peut pas être envoyé a soi même");
+        }
+        else {
+            Infos i = ((DAOInfos)modelinf).addInfos(infos);
+            if (i != null) view.affMsg("création de : " + i);
+            else view.affMsg("erreur de création");
+        }
     }
 }

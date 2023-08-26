@@ -5,6 +5,8 @@ import metier.Infos;
 import metier.Employe;
 import metier.Message;
 import mvp.model.DAOInfos;
+import mvp.model.DAOMessage;
+import mvp.model.SpecialEmploye;
 import mvp.view.InfosViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
