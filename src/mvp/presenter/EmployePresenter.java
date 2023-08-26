@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployePresenter {
     private static DAOEmploye model;
     private DAOBureau bureaumodel;
-    private EmployeViewInterface view;
+    private static EmployeViewInterface view;
     private BureauPresenter bureauPresenter;
     private static final Logger logger = LogManager.getLogger(EmployePresenter.class);
 
@@ -85,14 +85,14 @@ public class EmployePresenter {
         else view.affMsg("mise à jour effectuée : "+em);
     }
 
-    public Employe search(int idEmp) {
+    public static Employe search(int idEmp) {
         Employe em = model.readEmploye(idEmp);
         if(em==null) view.affMsg("recherche infructueuse");
         else view.affMsg(em.toString());
         return em;
     }
 
-    public Employe searchAdresse(String adresse){
+    public static Employe searchAdresse(String adresse){
         Employe em = ((SpecialEmploye)model).readAdresseEmploye(adresse);
         if(em==null) view.affMsg("recherche infructueuse");
         else view.affMsg(em.toString());

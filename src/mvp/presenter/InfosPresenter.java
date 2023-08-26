@@ -15,9 +15,9 @@ import java.util.List;
 
 public class InfosPresenter {
     private static DAOInfos model;
-    private InfosViewInterface view;
-    private EmployePresenter employePresenter;
-    private MessagePresenter messagePresenter;
+    private static InfosViewInterface view;
+    private static EmployePresenter employePresenter;
+    private static MessagePresenter messagePresenter;
 
     private static final Logger logger = LogManager.getLogger(MessagePresenter.class);
 
@@ -84,7 +84,7 @@ public class InfosPresenter {
         return i;
     }
 
-    public void update(Infos infos) {
+    public static void update(Infos infos) {
         Employe employe = employePresenter.search(infos.getId_emp());
         Message message= messagePresenter.search(infos.getId_mess());
         if(employe == null || message == null){

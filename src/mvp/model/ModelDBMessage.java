@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelDBMessage implements DAOMessage {
+public class ModelDBMessage implements DAOMessage, SpecialMessage {
     private static final Logger logger = LogManager.getLogger(ModelDBMessage.class);
     private Connection dbConnect;
 
@@ -151,6 +151,43 @@ public class ModelDBMessage implements DAOMessage {
                         .setContenu(cont)
                         .setDateEnvoi(date)
                         .setId_emp(id_emp)
+                        .build();
+                //Message mes = new Message(id_mess, objet, cont, date, id_emp);
+                lm.add(mes);
+            }
+            return lm;
+        } catch (SQLException e) {
+            //System.err.println("erreur sql :"+e);
+            logger.error("erreur SQL : " + e);
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Message> afficherMessageNonLu(String mail_emp) {
+        List<Message> lm = new ArrayList<>();
+        String query = "select * from EXAMVIEW_NOTREAD WHERE mail_emp = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1, mail_emp);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int id_emp = rs.getInt(1);
+                String nom = rs.getString(2);
+                String prenom = rs.getString(3);
+                int id_mess = rs.getInt(5);
+                String objet = rs.getString(6);
+                String cont = rs.getString(7);
+                int id_emp_emet = rs.getInt(8);
+                LocalDate date = rs.getDate(9).toLocalDate();
+
+                Message mes = new Message.MessageBuilder()
+                        .setId_mess(id_mess)
+                        .setObjet(objet)
+                        .setContenu(cont)
+                        .setDateEnvoi(date)
+                        .setId_emp(id_emp_emet)
                         .build();
                 //Message mes = new Message(id_mess, objet, cont, date, id_emp);
                 lm.add(mes);

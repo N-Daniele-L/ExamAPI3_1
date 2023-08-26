@@ -3,10 +3,7 @@ package mvp.presenter;
 import metier.Employe;
 import metier.Infos;
 import metier.Message;
-import mvp.model.DAOEmploye;
-import mvp.model.DAOInfos;
-import mvp.model.DAOMessage;
-import mvp.model.SpecialEmploye;
+import mvp.model.*;
 import mvp.view.MessageViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,8 +89,6 @@ public class MessagePresenter {
     public void envoyerMessage(String adresse_emet, String adresse_recept, Message message, Infos infos) throws Exception {
         Employe emetteur = employePresenter.searchAdresse(adresse_emet);
         Employe recepteur = employePresenter.searchAdresse(adresse_recept);
-        //Employe emetteur = ((SpecialEmploye)modelemp).readAdresseEmploye(adresse_emet);
-        //Employe recepteur = ((SpecialEmploye)modelemp).readAdresseEmploye(adresse_recept);
 
         Message me;
 
@@ -122,4 +117,9 @@ public class MessagePresenter {
             else view.affMsg("erreur de création");
         }
     }
+
+    public List<Message> getNonlu(String mail){
+        return ((SpecialMessage)model).afficherMessageNonLu(mail);
+    }
+
 }
