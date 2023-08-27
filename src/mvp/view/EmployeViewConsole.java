@@ -32,7 +32,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
     }
     @Override
     public void affMsg(String msg) {
-        System.out.println("information:" + msg);
+        System.out.println("information : " + msg);
     }
 
     @Override

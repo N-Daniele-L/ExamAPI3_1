@@ -1,5 +1,6 @@
 package mvp.model;
 
+import metier.Infos;
 import metier.Message;
 import myconnections.DBConnection;
 import org.apache.logging.log4j.LogManager;
@@ -166,11 +167,11 @@ public class ModelDBMessage implements DAOMessage, SpecialMessage {
     }
 
     @Override
-    public List<Message> afficherMessageNonLu(String mail_emp) {
+    public List<Message> afficherMessageNonLu(String mail) {
         List<Message> lm = new ArrayList<>();
         String query = "select * from EXAMVIEW_NOTREAD WHERE mail_emp = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1, mail_emp);
+            pstm.setString(1, mail);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 int id_emp = rs.getInt(1);
@@ -188,6 +189,50 @@ public class ModelDBMessage implements DAOMessage, SpecialMessage {
                         .setContenu(cont)
                         .setDateEnvoi(date)
                         .setId_emp(id_emp_emet)
+                        .build();
+                //Message mes = new Message(id_mess, objet, cont, date, id_emp);
+                lm.add(mes);
+            }
+            return lm;
+        } catch (SQLException e) {
+            //System.err.println("erreur sql :"+e);
+            logger.error("erreur SQL : " + e);
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Message> afficherMessageEnvoye(String mail) {
+        List<Message> lm = new ArrayList<>();
+        String query = "select * from EXAMVIEW_EMPMESS WHERE mail_emp = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1, mail);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int id_emp = rs.getInt(1);
+                String nom = rs.getString(2);
+                String prenom = rs.getString(3);
+                int id_mess = rs.getInt(5);
+                String objet = rs.getString(6);
+                String cont = rs.getString(7);
+                LocalDate dateenv = rs.getDate(8).toLocalDate();
+
+                Date datelect = rs.getDate(9);
+                if(datelect != null) {
+                    LocalDate localdate = datelect.toLocalDate();
+                }else {
+                    datelect = null;
+                }
+                int id_emp_recept = rs.getInt(10);
+
+                Message mes = new Message.MessageBuilder()
+                        .setId_mess(id_mess)
+                        .setObjet(objet)
+                        .setContenu(cont)
+                        .setDateEnvoi(dateenv)
+                        .setId_emp(id_emp_recept)
                         .build();
                 //Message mes = new Message(id_mess, objet, cont, date, id_emp);
                 lm.add(mes);

@@ -98,7 +98,7 @@ public class InfosPresenter {
         else view.affMsg("mise à jour effectuée : "+ i);
     }
 
-    public Infos search(int id_emp, int id_mess) {
+    public static Infos search(int id_emp, int id_mess) {
         Infos i = model.readInfos(id_emp, id_mess);
         if(i==null) view.affMsg("recherche infructueuse");
         else view.affMsg(i.toString());

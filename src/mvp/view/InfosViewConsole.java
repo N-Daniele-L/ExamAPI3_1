@@ -32,7 +32,7 @@ public class InfosViewConsole implements InfosViewInterface{
 
     @Override
     public void affMsg(String msg) {
-        System.out.println("information:" + msg);
+        System.out.println("information : " + msg);
     }
 
     @Override

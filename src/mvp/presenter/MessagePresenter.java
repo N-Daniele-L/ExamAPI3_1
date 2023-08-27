@@ -14,7 +14,7 @@ import java.util.List;
 public class MessagePresenter {
     private static DAOMessage model;
     private static DAOInfos modelinf;
-    private MessageViewInterface view;
+    private static MessageViewInterface view;
     private EmployePresenter employePresenter;
     private InfosPresenter infosPresenter;
 
@@ -79,7 +79,7 @@ public class MessagePresenter {
         else view.affMsg("mise à jour effectuée : "+me);
     }
 
-    public Message search(int id_mess) {
+    public static Message search(int id_mess) {
         Message me = model.readMessage(id_mess);
         if(me==null) view.affMsg("recherche infructueuse");
         else view.affMsg(me.toString());
@@ -122,4 +122,7 @@ public class MessagePresenter {
         return ((SpecialMessage)model).afficherMessageNonLu(mail);
     }
 
+    public List<Message> getMessageEnvoye(String mail) {
+        return ((SpecialMessage)model).afficherMessageEnvoye(mail);
+    }
 }

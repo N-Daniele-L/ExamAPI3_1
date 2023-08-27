@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SpecialMessage {
     List<Message> afficherMessageNonLu(String mail);
+
+    List<Message> afficherMessageEnvoye(String mail);
 }

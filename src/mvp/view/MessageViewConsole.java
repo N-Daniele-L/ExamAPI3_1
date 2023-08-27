@@ -36,7 +36,7 @@ public class MessageViewConsole implements MessageViewInterface {
 
     @Override
     public void affMsg(String msg) {
-        System.out.println("information:" + msg);
+        System.out.println("information : " + msg);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class MessageViewConsole implements MessageViewInterface {
 
     private void special() throws Exception {
         do {
-            int ch = choixListe(Arrays.asList("Envoyer un message à un employé", "Lire vos mesages non lu", "fin"));
+            int ch = choixListe(Arrays.asList("Envoyer un message à un employé", "Lire vos mesages non lu","Voir vos messages envoyé", "fin"));
             switch (ch) {
                 case 1:
                     envoyerMessage();
@@ -153,6 +153,9 @@ public class MessageViewConsole implements MessageViewInterface {
                     lireMessageNonLu();
                     break;
                 case 3:
+                    voirMessageEnvoye();
+                    break;
+                case 4:
                     return;
             }
         } while (true);
@@ -206,9 +209,32 @@ public class MessageViewConsole implements MessageViewInterface {
             }
             else {
                 for (Message me : lmnl) {
-                    Employe emetteur = EmployePresenter.search(me.getId_emp());
+                    EmployePresenter.search(me.getId_emp());
                     LocalDate now = LocalDate.now();
                     InfosPresenter.update(new Infos(recept.getId_emp(), me.getId_mess(), now));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("erreur " + e);
+        }
+    }
+
+    private void voirMessageEnvoye(){
+        ArrayList<Message> lme;
+        try {
+            System.out.println("Entrez votre adresse mail");
+            String emetteur = sc.nextLine();
+            EmployePresenter.searchAdresse(emetteur);
+            lme = (ArrayList<Message>) presenter.getMessageEnvoye(emetteur);
+            if(lme == null){
+                System.out.println("Aucun message non lu");
+            }
+            else {
+                for (Message me : lme) {
+                    MessagePresenter.search(me.getId_mess());
+                    InfosPresenter.search(me.getId_emp(), me.getId_mess());
+                    EmployePresenter.search(me.getId_emp());
                 }
             }
 
