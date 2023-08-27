@@ -160,11 +160,18 @@ public class MessageViewConsole implements MessageViewInterface {
 
     private void envoyerMessage() {
         try {
+            String choix;
+            ArrayList<String> tabrecpeteur = new ArrayList<>();
             LocalDate now = LocalDate.now();
             System.out.println("Entrez votre adresse mail");
             String emetteur = sc.nextLine();
-            System.out.println("Entrez l'adresse mail du recepteur");
-            String recepteur = sc.nextLine();
+            do {
+                System.out.println("Entrez l'adresse mail du recepteur");
+                String recepteur = sc.nextLine();
+                tabrecpeteur.add(recepteur);
+                System.out.println("Voulez vous ajouter un autre recepteur ? : y/n");
+                choix = sc.nextLine();
+            }while (choix.equals("y"));
             System.out.println("Entrez l'objet du message': ");
             String obj = sc.nextLine();
             System.out.println("Entrez le contenu du message");
@@ -177,7 +184,9 @@ public class MessageViewConsole implements MessageViewInterface {
                     .setId_emp(0)
                     .build();
             Infos in = new Infos(null, null);
-            presenter.envoyerMessage(emetteur, recepteur, me, in);
+            for (String dest : tabrecpeteur) {
+                presenter.envoyerMessage(emetteur, dest, me, in);
+            }
             lm = presenter.getAll();
             affListe(lm);
         } catch (Exception e) {
