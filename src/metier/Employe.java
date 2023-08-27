@@ -246,8 +246,8 @@ public class Employe {
             return this;
         }
         public Employe build() throws Exception{
-            /*if(nom==null || prenom==null) throw new
-                    Exception("informations de construction incomplètes");*/
+            if(nom==null || prenom==null) throw new
+                    Exception("informations de construction incomplètes");
             return new Employe(this);
         }
     }

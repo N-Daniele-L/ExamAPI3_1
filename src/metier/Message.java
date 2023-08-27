@@ -165,8 +165,8 @@ public class Message {
         }
 
         public Message build() throws Exception{
-            /*if(l_infos==null) throw new
-                    Exception("informations de construction incomplètes");*/
+            if(objet==null && contenu==null && dateEnvoi==null && l_infos.isEmpty()) throw new
+                    Exception("informations de construction incomplètes");
             return new Message(this);
         }
     }
