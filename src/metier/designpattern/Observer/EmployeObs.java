@@ -15,15 +15,15 @@ public class EmployeObs extends Subject implements ObserverInterface{
     /**
      * adresse mail unique de l'EmployeObs
      */
-    protected static String mail;
+    protected String mail;
     /**
      * nom de l'EmployeObs
      */
-    protected static String nom;
+    protected String nom;
     /**
      * prenom de l'EmployeObs
      */
-    protected static String prenom;
+    protected String prenom;
     /**
      * bureau ou l'EmployeObs travaille
      */
@@ -154,11 +154,13 @@ public class EmployeObs extends Subject implements ObserverInterface{
 
     @Override
     public void update(String msg) {
-        System.out.println(prenom+" "+nom+" a modifié son adresse mail :"+msg);
+        System.out.println(prenom+" "+nom+" a reçu le message : "+msg);
     }
+    @Override
     public String getNotification() {
-        return "Nouveau mail de " + nom + prenom + "qui est" + mail;
+        return null;
     }
+
     public static class EmployeObsBuilder extends Subject {
         /**
          * id unique de l'EmployeObs
@@ -257,12 +259,11 @@ public class EmployeObs extends Subject implements ObserverInterface{
 
         @Override
         public void update(String msg) {
-
+            System.out.println();
         }
-
         @Override
         public String getNotification() {
-            return this.mail;
+            return "Le nouveau mail de " + prenom + " " + nom + " est le suivant : " + mail +"\n";
         }
     }
 }
