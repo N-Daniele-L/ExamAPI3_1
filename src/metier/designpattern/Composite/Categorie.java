@@ -1,4 +1,7 @@
-package metier;
+package metier.designpattern.Composite;
+
+import metier.Employe;
+import metier.designpattern.Composite.Element;
 
 import java.util.HashSet;
 import java.util.Set;

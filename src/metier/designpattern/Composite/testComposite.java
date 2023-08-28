@@ -1,4 +1,6 @@
-package metier;
+package metier.designpattern.Composite;
+
+import metier.Employe;
 
 public class testComposite {
     public static void main(String[] args) throws Exception {

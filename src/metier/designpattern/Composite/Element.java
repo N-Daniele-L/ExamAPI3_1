@@ -1,4 +1,4 @@
-package metier;
+package metier.designpattern.Composite;
 
 public abstract class Element {
         private int id;

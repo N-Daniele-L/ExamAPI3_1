@@ -1,54 +1,46 @@
-package metier;
+package metier.designpattern.Observer;
 
-import metier.designpattern.Composite.Element;
+import metier.Bureau;
+import metier.Message;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * classe metier des employes
- *
- * @author Daniele Nicolo
- * @version 1.0
- * @see Bureau
- * @see Infos
- */
-public class Employe extends Element{
+public class EmployeObs extends Subject implements ObserverInterface{
     /**
-     * id unique de l'employe
+     * id unique de l'EmployeObs
      */
     protected int id_emp;
     /**
-     * adresse mail unique de l'employe
+     * adresse mail unique de l'EmployeObs
      */
-    protected String mail;
+    protected static String mail;
     /**
-     * nom de l'employe
+     * nom de l'EmployeObs
      */
-    protected String nom;
+    protected static String nom;
     /**
-     * prenom de l'employe
+     * prenom de l'EmployeObs
      */
-    protected String prenom;
+    protected static String prenom;
     /**
-     * bureau ou l'employe travaille
+     * bureau ou l'EmployeObs travaille
      */
     protected Bureau bureau;
     protected int id_bur;
     /**
-     * message que l'employe a ecrit
+     * message que l'EmployeObs a ecrit
      */
     protected List<Message> msg = new ArrayList<>();
 
     /**
      * constructeur parametre
      *
-     * @param eb objet de la classe EmployeBuilder
+     * @param eb objet de la classe EmployeObsBuilder
      */
 
-    public Employe(EmployeBuilder eb) {
-        super(eb.id_emp, eb.nom);
+    public EmployeObs(EmployeObs.EmployeObsBuilder eb) {
         this.id_emp = eb.id_emp;
         this.mail = eb.mail;
         this.nom = eb.nom;
@@ -60,7 +52,7 @@ public class Employe extends Element{
     /**
      * getter getid
      *
-     * @return id unique de l'employe
+     * @return id unique de l'EmployeObs
      */
     public int getId() {
         return id_emp;
@@ -69,7 +61,7 @@ public class Employe extends Element{
     /**
      * getter getmail
      *
-     * @return adresse mail unique de l'employe
+     * @return adresse mail unique de l'EmployeObs
      */
     public String getMail() {
         return mail;
@@ -78,7 +70,7 @@ public class Employe extends Element{
     /**
      * getter getnom
      *
-     * @return nom de l'employe
+     * @return nom de l'EmployeObs
      */
     public String getNom() {
         return nom;
@@ -91,7 +83,7 @@ public class Employe extends Element{
     /**
      * getter getprenom
      *
-     * @return prenom de l'employe
+     * @return prenom de l'EmployeObs
      */
     public String getPrenom() {
         return prenom;
@@ -100,7 +92,7 @@ public class Employe extends Element{
     /**
      * getter getmsg
      *
-     * @return la liste des messages ecrit de l'employe
+     * @return la liste des messages ecrit de l'EmployeObs
      */
 
     public List<Message> getMsg() {
@@ -110,7 +102,7 @@ public class Employe extends Element{
     /**
      * getter getbureau
      *
-     * @return le bureau de l'employe ou il travaille
+     * @return le bureau de l'EmployeObs ou il travaille
      */
     public Bureau getBureau() {
         return bureau;
@@ -121,23 +113,23 @@ public class Employe extends Element{
     }
 
     /**
-     * egalite de deux employes basee sur l'adresse mail de l'employe
+     * egalite de deux EmployeObss basee sur l'adresse mail de l'EmployeObs
      *
-     * @param o autre employe
+     * @param o autre EmployeObs
      * @return egalite ou pas
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employe employe = (Employe) o;
-        return Objects.equals(mail, employe.mail);
+        EmployeObs EmployeObs = (EmployeObs) o;
+        return Objects.equals(mail, EmployeObs.mail);
     }
 
     /**
-     * calcul du hashcode du produit base sur l'adresse mail de l'employe
+     * calcul du hashcode du produit base sur l'adresse mail de l'EmployeObs
      *
-     * @return hashcode de l'employe
+     * @return hashcode de l'EmployeObs
      */
     @Override
     public int hashCode() {
@@ -145,13 +137,13 @@ public class Employe extends Element{
     }
 
     /**
-     * affichage des infos de l'employe
+     * affichage des infos de l'EmployeObs
      *
-     * @return description complete de l'employe
+     * @return description complete de l'EmployeObs
      */
     @Override
     public String toString() {
-        return "Employe{" +
+        return "EmployeObs{" +
                 "id_emp=" + id_emp +
                 ", mail='" + mail + '\'' +
                 ", nom='" + nom + '\'' +
@@ -159,59 +151,68 @@ public class Employe extends Element{
                 ", bureau=" + id_bur +
                 '}';
     }
-    public static class EmployeBuilder{
+
+    @Override
+    public void update(String msg) {
+        System.out.println(prenom+" "+nom+" a modifié son adresse mail :"+msg);
+    }
+    public String getNotification() {
+        return "Nouveau mail de " + nom + prenom + "qui est" + mail;
+    }
+    public static class EmployeObsBuilder extends Subject {
         /**
-         * id unique de l'employe
+         * id unique de l'EmployeObs
          */
         protected int id_emp;
         /**
-         * adresse mail unique de l'employe
+         * adresse mail unique de l'EmployeObs
          */
         protected String mail;
         /**
-         * nom de l'employe
+         * nom de l'EmployeObs
          */
         protected String nom;
         /**
-         * prenom de l'employe
+         * prenom de l'EmployeObs
          */
         protected String prenom;
         /**
-         * bureau ou l'employe travaille
+         * bureau ou l'EmployeObs travaille
          */
         protected Bureau bureau;
         protected int id_bur;
 
         /**
-         * message que l'employe a ecrit
+         * message que l'EmployeObs a ecrit
          */
         protected List<Message> msg = new ArrayList<>();
 
         /**
          * setter setid
          *
-         * @param id_emp changement de l'id unique de l'employe
+         * @param id_emp changement de l'id unique de l'EmployeObs
          */
-        public EmployeBuilder setId(int id_emp) {
+        public EmployeObs.EmployeObsBuilder setId(int id_emp) {
             this.id_emp = id_emp;
             return this;
         }
         /**
          * setter setmail
          *
-         * @param mail changement du mail unique de l'employe
+         * @param mail changement du mail unique de l'EmployeObs
          */
-        public EmployeBuilder setMail(String mail) {
+        public EmployeObs.EmployeObsBuilder setMail(String mail) {
             this.mail = mail;
+            notifyObservers();
             return this;
         }
 
         /**
          * setter setnom
          *
-         * @param nom de l'employe
+         * @param nom de l'EmployeObs
          */
-        public EmployeBuilder setNom(String nom) {
+        public EmployeObs.EmployeObsBuilder setNom(String nom) {
             this.nom = nom;
             return this;
         }
@@ -219,9 +220,9 @@ public class Employe extends Element{
         /**
          * setter setprenom
          *
-         * @param prenom de l'employe
+         * @param prenom de l'EmployeObs
          */
-        public EmployeBuilder setPrenom(String prenom) {
+        public EmployeObs.EmployeObsBuilder setPrenom(String prenom) {
             this.prenom = prenom;
             return this;
         }
@@ -229,29 +230,39 @@ public class Employe extends Element{
         /**
          * setter setmsg
          *
-         * @param msg modifie la liste des messages ecrit de l'employe
+         * @param msg modifie la liste des messages ecrit de l'EmployeObs
          */
-        public EmployeBuilder setMsg(List<Message> msg) {
+        public EmployeObs.EmployeObsBuilder setMsg(List<Message> msg) {
             this.msg = msg;
             return this;
         }
         /**
          * setter setbureau
          *
-         * @param bureau modifie le bureau de l'employe ou il travaille
+         * @param bureau modifie le bureau de l'EmployeObs ou il travaille
          */
-        public EmployeBuilder setBureau(Bureau bureau) {
+        public EmployeObs.EmployeObsBuilder setBureau(Bureau bureau) {
             this.bureau = bureau;
             return this;
         }
-        public EmployeBuilder setId_bur(int id_bur) {
+        public EmployeObs.EmployeObsBuilder setId_bur(int id_bur) {
             this.id_bur = id_bur;
             return this;
         }
-        public Employe build() throws Exception{
+        public EmployeObs build() throws Exception{
             if(nom==null || prenom==null) throw new
                     Exception("informations de construction incomplètes");
-            return new Employe(this);
+            return new EmployeObs(this);
+        }
+
+        @Override
+        public void update(String msg) {
+
+        }
+
+        @Override
+        public String getNotification() {
+            return this.mail;
         }
     }
 }
