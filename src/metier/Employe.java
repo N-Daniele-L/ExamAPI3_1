@@ -12,7 +12,7 @@ import java.util.Objects;
  * @see Bureau
  * @see Infos
  */
-public class Employe {
+public class Employe extends Element{
     /**
      * id unique de l'employe
      */
@@ -46,6 +46,7 @@ public class Employe {
      */
 
     public Employe(EmployeBuilder eb) {
+        super(eb.id_emp, eb.nom);
         this.id_emp = eb.id_emp;
         this.mail = eb.mail;
         this.nom = eb.nom;
