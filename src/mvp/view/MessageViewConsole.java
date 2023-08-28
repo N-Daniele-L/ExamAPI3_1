@@ -163,6 +163,7 @@ public class MessageViewConsole implements MessageViewInterface {
 
     private void envoyerMessage() {
         try {
+            Message m;
             String choix;
             ArrayList<String> tabrecpeteur = new ArrayList<>();
             LocalDate now = LocalDate.now();
@@ -186,9 +187,10 @@ public class MessageViewConsole implements MessageViewInterface {
                     .setDateEnvoi(now)
                     .setId_emp(0)
                     .build();
+            m = presenter.NouveauMessage(me,emetteur);
             Infos in = new Infos(null, null);
             for (String dest : tabrecpeteur) {
-                presenter.envoyerMessage(emetteur, dest, me, in);
+                presenter.envoyerMessage(emetteur, dest, m, in);
             }
             lm = presenter.getAll();
             affListe(lm);

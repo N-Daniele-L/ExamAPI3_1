@@ -8,7 +8,6 @@ import mvp.view.MessageViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class MessagePresenter {
@@ -61,6 +60,21 @@ public class MessagePresenter {
         else view.affMsg("création de : " + m);
     }
 
+    public Message NouveauMessage(Message message, String adresse_emet) throws Exception {
+        Employe emetteur = EmployePresenter.searchAdresse(adresse_emet);
+        Message me = new Message.MessageBuilder()
+                .setId_mess(0)
+                .setObjet(message.getObjet())
+                .setContenu(message.getContenu())
+                .setDateEnvoi(message.getDateEnvoi())
+                .setEmetteur(emetteur)
+                .build();
+        Message m = model.addMessage(me);
+        if(m==null) view.affMsg("erreur de creation");
+        else view.affMsg("création de : " + m);
+        return m;
+    }
+
     public void removeMessage(Message message) {
         boolean ok = model.removeMessage(message);
         if(ok) view.affMsg("message effacé");
@@ -87,27 +101,23 @@ public class MessagePresenter {
     }
 
     public void envoyerMessage(String adresse_emet, String adresse_recept, Message message, Infos infos) throws Exception {
-        Employe emetteur = employePresenter.searchAdresse(adresse_emet);
         Employe recepteur = employePresenter.searchAdresse(adresse_recept);
 
-        Message me;
-
-        me = new Message.MessageBuilder()
+        /*Message me = new Message.MessageBuilder()
                 .setId_mess(0)
                 .setObjet(message.getObjet())
                 .setContenu(message.getContenu())
                 .setDateEnvoi(message.getDateEnvoi())
                 .setEmetteur(emetteur)
                 .build();
-
         Message m = model.addMessage(me);
         if(m==null) view.affMsg("erreur de creation");
-        else view.affMsg("création de : " + m);
+        else view.affMsg("création de : " + m);*/
 
 
 
         infos.setRecepteur(recepteur);
-        infos.setMess(m);
+        infos.setMess(message);
         if(infos.getRecepteur().getId_emp() == message.getId_emp()){
             view.affMsg(" erreur un message ne peut pas être envoyé a soi même");
         }
